@@ -127,6 +127,11 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist")
             return
 
+        if len(args) in HBNBCommand.classes:
+            new_instance = HBNBCommand.classes[cls]()
+            storage.save()
+            print(new_instance.id)
+
         if args[0] in HBNBCommand.classes:
             new_dict = {}
             for a in args:
