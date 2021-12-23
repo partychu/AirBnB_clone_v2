@@ -134,7 +134,8 @@ class HBNBCommand(cmd.Cmd):
                     value = key_value_list[1]
                     if value[0] and value[-1] == '"':
                         value = value[1:-1]
-                    value = value.replace('_', ' ')
+                    if '_' in value:
+                        value = value.replace('_', ' ')
                     new_dict[key_value_list[0]] = value
                 else:
                     continue
