@@ -123,16 +123,16 @@ class HBNBCommand(cmd.Cmd):
         args = args.split(' ')
         cls = args[0]
 
-        if args[0] not in HBNBCommand.classes:
+        if cls not in HBNBCommand.classes:
             print("** class doesn't exist")
             return
 
-        if len(args) in HBNBCommand.classes:
-            new_instance = HBNBCommand.classes[cls]()
-            storage.save()
-            print(new_instance.id)
 
-        if args[0] in HBNBCommand.classes:
+        if cls in HBNBCommand.classes:
+            if len(args) == 1:
+                new_instance = HBNBCommand.classes[cls]()
+                storage.save()
+                print(new_instance.id)
             new_dict = {}
             for a in args:
                 if "=" in a:
@@ -141,11 +141,13 @@ class HBNBCommand(cmd.Cmd):
                     value = key_value_list[1]
                     if value[0] and value[-1] == '"':
                         value = value[1:-1]
-                    if '_' in value:
-                        value = value.replace('_', ' ')
-                    new_dict[key[0]] = value
-                else:
-                    continue
+                        if '_' in value:
+                            value = value.replace('_', ' ')
+                    else:
+                        value = eval(value)
+
+                    new_dict[key] = value
+                    storage.save()
 
         new_instance = HBNBCommand.classes[cls]()
         new_instance.__dict__.update(new_dict)
