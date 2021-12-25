@@ -6,7 +6,7 @@ from os import getenv
 
 if getenv('HBNB_MYSQL_DB') == 'db':
     storage = DBStorage()
-    storage.(reload)
+    storage.reload()
 
 else:
     storage = FileStorage()
