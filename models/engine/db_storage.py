@@ -9,6 +9,14 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
 from models.state import State
 from models.city import City
+from models.user import User
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
+
+classes = {'User': User, 'Place': Place,
+           'State': State, 'City': City, 'Amenity': Amenity,
+           'Review': Review}
 
 
 class DBStorage:
@@ -31,7 +39,18 @@ class DBStorage:
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
-#   def all(self, cls=None):
+    def all(self, cls=None):
+        """Returns query on current database"""
+        all_dict = {}
+        if cls is None:
+            for c in classes:
+                obj = self.__session.query(classes[c]).all()
+        else:
+            obj = self.__session.query(cls).all()
+        for o in obj:
+            k = obj.__class__.__name__ + '.' + obj.id
+            all_dict[k] = o
+        return (all_dict)
 
     def new(self, obj):
         """Add object"""
