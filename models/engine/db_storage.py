@@ -41,38 +41,16 @@ class DBStorage:
 
     def all(self, cls=None):
         """Returns query on current database"""
-
-        newdict = {}
-        if cls:
-            query = self.__session.query(cls).all()
-            for obj in query:
-                newdict[cls + "." + obj.id] = obj
-        else:
-            for key, value in self.hbnb_classes.items():
-                try:
-                    query = self.__session.query(value).all()
-                except:
-                    pass
-                for obj in query:
-                    newdict[key + "." + obj.id] = obj
-
-        return newdict
-
-
-
-
-        """a_d = {}
+        a_d = {}
 
         if cls is None:
             for c in classes:
-                obj = self.__session.query(classes[c]).all()
-                for o in obj:
-                    a_d[o.__class__.__name__ + '.' + o.id] = o
+                obj += self.__session.query(classes[c]).all()
         else:
             obj = self.__session.query(cls)
-            for o in obj:
-                a_d[o.__class__.__name__ + '.' + o.id] = o
-        return a_d"""
+        for o in obj:
+            a_d[o.__class__.__name__ + '.' + o.id] = o
+        return a_d
 
     def new(self, obj):
         """Add object"""
