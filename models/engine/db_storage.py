@@ -41,16 +41,38 @@ class DBStorage:
 
     def all(self, cls=None):
         """Returns query on current database"""
-        all_dict = {}
+
+        newdict = {}
+        if cls:
+            query = self.__session.query(cls).all()
+            for obj in query:
+                newdict[cls + "." + obj.id] = obj
+        else:
+            for key, value in self.hbnb_classes.items():
+                try:
+                    query = self.__session.query(value).all()
+                except:
+                    pass
+                for obj in query:
+                    newdict[key + "." + obj.id] = obj
+
+        return newdict
+
+
+
+
+        """a_d = {}
+
         if cls is None:
             for c in classes:
                 obj = self.__session.query(classes[c]).all()
+                for o in obj:
+                    a_d[o.__class__.__name__ + '.' + o.id] = o
         else:
-            obj = self.__session.query(cls).all()
-        for o in obj:
-            k = obj.__class__.__name__ + '.' + obj.id
-            all_dict[k] = o
-        return (all_dict)
+            obj = self.__session.query(cls)
+            for o in obj:
+                a_d[o.__class__.__name__ + '.' + o.id] = o
+        return a_d"""
 
     def new(self, obj):
         """Add object"""
@@ -68,6 +90,7 @@ class DBStorage:
     def reload(self):
         """Reloads database"""
         Base.metadata.create_all(self.__engine)
-        Session = scoped_session(sessionmaker(bind=self.__engine,
-                                 expire_on_commit=False))
+        session_factory = sessionmaker(
+                bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(session_factory)
         self.__session = Session()

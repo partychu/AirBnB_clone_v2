@@ -1,4 +1,3 @@
-# Git ignore for AirBnB project
-*.json
-models/__pcache__/
-models/engine/__pycache__/
+/__pycache__/*
+models/__pycache__
+models/engine/__pycache__
