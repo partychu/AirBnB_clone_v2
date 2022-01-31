@@ -35,7 +35,7 @@ def py(text='is cool'):
 @app.route('/number/<n>', strict_slashes=False)
 def number(n):
     """ Prints number """
-    if type(n) is int:
+    if int(n):
         return ("{} is a number".format(n))
 
 
