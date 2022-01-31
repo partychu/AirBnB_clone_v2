@@ -32,11 +32,10 @@ def py(text='is cool'):
     return ("Python {}".format(text.replace('_', ' ')))
 
 
-@app.route('/number/<n>', strict_slashes=False)
+@app.route('/number/<int:n>', strict_slashes=False)
 def number(n):
     """ Prints number """
-    if int(n):
-        return ("{} is a number".format(n))
+    return "{} is a number".format(n)
 
 
 if __name__ == '__main__':
