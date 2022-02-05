@@ -9,6 +9,7 @@ from fabric.api import local
 from datetime import datetime
 import os
 
+
 def do_pack():
     """ packs up webstatic """
     web_s = "web_static"
