@@ -55,10 +55,10 @@ def do_deploy(archive_path):
         return False
 
 
-def do_deploy():
+def deploy():
     """ Packs and deploys """
     try:
         archive_path = do_pack()
     except Exception:
         return False
-    return = do_deploy(archive_path)
+    return do_deploy(archive_path)
